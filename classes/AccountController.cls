@@ -6,5 +6,10 @@ public with sharing class AccountController {
             System.debug(acc.Id);
         }
     }
-    void test1(){ }   
+    void test1(){
+        List<Account> accountList = [SELECT Id, Name FROM Account LIMIT 5];
+        for (Account acc : accountList){
+            System.debug(acc.Id);
+        }
+     }   
 }

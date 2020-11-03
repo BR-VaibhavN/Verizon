@@ -1,25 +1,6 @@
 public with sharing class AccountTeamHelper{
     public static Map<Id, List<Id>> userToTeamMap = new Map<Id, List<Id>>();
     public static Map<Id, Map<Id, AccountTeamMember>> accountAndTeamMap = new Map<Id, Map<Id, AccountTeamMember>>();
-    
-    private void trackAccountTeamMember(List<Account> accountList, Set<Id> userIds, Set<Id> accountIds){
-        Map<Id, AccountTeamMember> memberList;
-        for (AccountTeamMember member : [SELECT Id, UserId, AccountId, AccountAccessLevel, CaseAccessLevel, TeamMemberRole, OpportunityAccessLevel, ContactAccessLevel
-                                         FROM AccountTeamMember
-                                         WHERE AccountID IN :accountIds AND UserId NOT IN (
-                                         SELECT UserId from UserAccountTeamMember WHERE OwnerID = :userIds)]){
-            if (AccountTeamHelper.accountAndTeamMap.containsKey(member.AccountId)){
-                memberList = AccountTeamHelper.accountAndTeamMap.get(member.AccountId);
-            } else{
-                memberList = new Map<Id, AccountTeamMember>();
-            }
-            if (memberList.containsKey(member.UserId)){
-                continue;
-            }
-            memberList.put(member.UserId, member.clone(false, true, false, false));
-            AccountTeamHelper.accountAndTeamMap.put(member.AccountId, memberList);
-        }
-    }
 
     private void trackUserAccountTeam(List<Account> accountList, Set<Id> userIds){
         List<Id> memberList;

@@ -1,7 +1,7 @@
 public with sharing class AccountTeamHelper{
     public static Map<Id, List<Id>> userToTeamMap = new Map<Id, List<Id>>();
     public static Map<Id, Map<Id, AccountTeamMember>> accountAndTeamMap = new Map<Id, Map<Id, AccountTeamMember>>();
-    
+
     private void trackAccountTeamMember(List<Account> accountList, Set<Id> userIds, Set<Id> accountIds){
         Map<Id, AccountTeamMember> memberList;
         for (AccountTeamMember member : [SELECT Id, UserId, AccountId, AccountAccessLevel, CaseAccessLevel, TeamMemberRole, OpportunityAccessLevel, ContactAccessLevel
